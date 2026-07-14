@@ -1,0 +1,531 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Radiance | Global Private Markets Investment Firm</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,400;9..144,500;9..144,600&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#0A1930;
+    --ink-2:#111f3d;
+    --parchment:#F3EFE6;
+    --paper:#FBFAF7;
+    --gold:#B8935B;
+    --gold-light:#E4C899;
+    --bronze:#7A5C34;
+    --slate:#4A5261;
+    --slate-light:#8A93A3;
+    --line: rgba(184,147,91,0.25);
+    --line-dark: rgba(255,255,255,0.12);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter',sans-serif;
+    background:var(--paper);
+    color:var(--ink);
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:0.01ms !important; animation-iteration-count:1 !important; transition-duration:0.01ms !important; scroll-behavior:auto !important;}
+  }
+  a{color:inherit;text-decoration:none;}
+  h1,h2,h3,h4{font-family:'Fraunces',serif;font-weight:500;letter-spacing:-0.01em;}
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold);
+    display:flex;
+    align-items:center;
+    gap:10px;
+  }
+  .eyebrow::before{
+    content:"";
+    width:22px;height:1px;
+    background:var(--gold);
+    display:inline-block;
+  }
+  .wrap{max-width:1240px;margin:0 auto;padding:0 40px;}
+  @media (max-width:720px){.wrap{padding:0 22px;}}
+
+
+  /* ---------- NAV ---------- */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:100;
+    background:rgba(10,25,48,0.0);
+    transition:background 0.4s ease, backdrop-filter 0.4s ease, box-shadow .4s ease;
+  }
+  header.scrolled{
+    background:rgba(10,25,48,0.92);
+    backdrop-filter:blur(10px);
+    box-shadow:0 1px 0 var(--line-dark);
+  }
+  nav{
+    display:flex; align-items:center; justify-content:space-between;
+    padding:22px 40px;
+    max-width:1240px; margin:0 auto;
+  }
+  .logo{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Fraunces',serif; font-size:1.28rem; color:#fff; font-weight:500;
+  }
+  .logo .mark{
+    width:22px;height:22px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff, var(--gold-light) 40%, var(--gold) 75%, var(--bronze));
+    box-shadow:0 0 14px rgba(184,147,91,0.7);
+  }
+  .navlinks{display:flex; gap:38px; font-size:0.88rem; color:rgba(255,255,255,0.78);}
+  .navlinks a{position:relative; padding:4px 0; transition:color .25s;}
+  .navlinks a:hover{color:#fff;}
+  .navlinks a::after{
+    content:""; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--gold);
+    transition:width .3s ease;
+  }
+  .navlinks a:hover::after{width:100%;}
+  .nav-cta{
+    font-size:0.82rem; font-family:'IBM Plex Mono',monospace; letter-spacing:0.06em;
+    color:#0A1930; background:var(--gold-light);
+    padding:10px 20px; border-radius:2px;
+    border:1px solid var(--gold-light);
+    transition:background .25s, color .25s;
+  }
+  .nav-cta:hover{background:transparent; color:#fff;}
+  .navtoggle{display:none;}
+  @media (max-width:900px){
+    .navlinks{display:none;}
+    .navtoggle{display:block; background:none;border:none;color:#fff;font-size:1.4rem;cursor:pointer;}
+  }
+
+  /* ---------- HERO ---------- */
+  .hero{
+    position:relative;
+    min-height:100vh;
+    background:
+      radial-gradient(1200px 600px at 15% -10%, rgba(184,147,91,0.18), transparent 60%),
+      linear-gradient(180deg, #0A1930 0%, #0D2140 60%, #0A1930 100%);
+    overflow:hidden;
+    display:flex; align-items:center;
+    padding-top:120px; padding-bottom:100px;
+  }
+  .beam{
+    position:absolute; top:-20%; left:-10%;
+    width:160%; height:160%;
+    background:linear-gradient(115deg, transparent 40%, rgba(228,200,153,0.14) 48%, rgba(184,147,91,0.35) 50%, rgba(228,200,153,0.14) 52%, transparent 60%);
+    transform:translateX(-30%);
+    animation:sweep 7s ease-in-out infinite;
+    pointer-events:none;
+  }
+  @keyframes sweep{
+    0%{transform:translateX(-35%);}
+    50%{transform:translateX(5%);}
+    100%{transform:translateX(-35%);}
+  }
+  .hero-grid{
+    position:relative; z-index:2;
+    width:100%;
+    display:grid; grid-template-columns:1.3fr 0.7fr; gap:60px; align-items:end;
+  }
+  @media (max-width:900px){.hero-grid{grid-template-columns:1fr;}}
+  .hero h1{
+    color:#fff;
+    font-size:clamp(2.6rem, 5.4vw, 4.6rem);
+    line-height:1.04;
+    font-weight:400;
+    max-width:14ch;
+  }
+  .hero h1 em{
+    font-style:italic; font-weight:300;
+    background:linear-gradient(100deg, var(--gold-light), var(--gold) 60%, var(--bronze));
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .hero-sub{
+    color:rgba(255,255,255,0.68);
+    font-size:1.05rem; max-width:42ch; margin-top:26px;
+  }
+  .hero-cta-row{display:flex; gap:16px; margin-top:38px; flex-wrap:wrap;}
+  .btn-primary{
+    background:var(--gold-light); color:#0A1930; padding:14px 26px; font-size:0.88rem;
+    font-family:'IBM Plex Mono',monospace; letter-spacing:0.04em; border-radius:2px;
+    border:1px solid var(--gold-light); transition:all .25s;
+  }
+  .btn-primary:hover{background:transparent; color:#fff;}
+  .btn-ghost{
+    color:#fff; padding:14px 8px; font-size:0.88rem; border-bottom:1px solid var(--line-dark);
+    font-family:'IBM Plex Mono',monospace; letter-spacing:0.04em; transition:border-color .25s;
+  }
+  .btn-ghost:hover{border-color:var(--gold);}
+  .hero-figures{
+    display:flex; flex-direction:column; gap:22px;
+    border-left:1px solid var(--line-dark); padding-left:32px;
+  }
+  @media (max-width:900px){.hero-figures{border-left:none; padding-left:0; border-top:1px solid var(--line-dark); padding-top:24px; flex-direction:row; flex-wrap:wrap;}}
+  .fig{min-width:120px;}
+  .fig .num{font-family:'Fraunces',serif; font-size:2.1rem; color:var(--gold-light); font-weight:400;}
+  .fig .lbl{font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.08em; color:rgba(255,255,255,0.55); text-transform:uppercase; margin-top:4px;}
+
+  /* ---------- MARQUEE / TICKER ---------- */
+  .ticker-band{
+    background:var(--ink-2); border-top:1px solid var(--line-dark); border-bottom:1px solid var(--line-dark);
+    overflow:hidden; padding:16px 0;
+  }
+  .ticker-track{
+    display:flex; gap:60px; white-space:nowrap;
+    animation:scroll-left 28s linear infinite;
+    width:max-content;
+  }
+  @keyframes scroll-left{from{transform:translateX(0);} to{transform:translateX(-50%);}}
+  .ticker-track span{
+    font-family:'IBM Plex Mono',monospace; font-size:0.78rem; letter-spacing:0.1em;
+    color:rgba(255,255,255,0.5); text-transform:uppercase;
+  }
+  .ticker-track span b{color:var(--gold-light); font-weight:500;}
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{padding:120px 0;}
+  @media (max-width:720px){section{padding:80px 0;}}
+  .section-head{display:flex; justify-content:space-between; align-items:flex-end; gap:40px; margin-bottom:64px; flex-wrap:wrap;}
+  .section-head h2{font-size:clamp(1.9rem,3.4vw,2.7rem); font-weight:400; max-width:16ch;}
+  .section-head p{max-width:34ch; color:var(--slate); font-size:0.98rem;}
+
+  /* ---------- SECTORS ---------- */
+  .sectors{background:var(--parchment);}
+  .sector-grid{display:grid; grid-template-columns:repeat(4,1fr); gap:1px; background:var(--line);}
+  @media (max-width:900px){.sector-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.sector-grid{grid-template-columns:1fr;}}
+  .sector-card{
+    background:var(--parchment); padding:44px 30px; position:relative; min-height:260px;
+    display:flex; flex-direction:column; justify-content:space-between;
+    transition:background .3s ease;
+  }
+  .sector-card:hover{background:var(--paper);}
+  .sector-card .si{font-family:'IBM Plex Mono',monospace; font-size:0.75rem; color:var(--gold);}
+  .sector-card h3{font-size:1.35rem; margin-top:70px; font-weight:500;}
+  .sector-card p{font-size:0.88rem; color:var(--slate); margin-top:12px;}
+  .sector-card .arrow{
+    margin-top:20px; width:34px; height:34px; border-radius:50%;
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center;
+    font-size:1rem; color:var(--bronze); transition:all .3s;
+  }
+  .sector-card:hover .arrow{background:var(--gold); color:#fff; border-color:var(--gold); transform:rotate(45deg);}
+
+  /* ---------- APPROACH ---------- */
+  .approach{background:var(--paper);}
+  .approach-grid{display:grid; grid-template-columns:0.9fr 1.1fr; gap:80px;}
+  @media (max-width:900px){.approach-grid{grid-template-columns:1fr; gap:50px;}}
+  .approach-visual{
+    position:relative; border-radius:2px; overflow:hidden;
+    background:linear-gradient(160deg,#0A1930,#182F55 60%, #0A1930);
+    min-height:420px; display:flex; align-items:center; justify-content:center;
+  }
+  .approach-visual .ring{
+    position:absolute; border-radius:50%; border:1px solid var(--line-dark);
+  }
+  .approach-visual .r1{width:260px;height:260px; animation:spin 40s linear infinite;}
+  .approach-visual .r2{width:180px;height:180px; border-color:rgba(184,147,91,0.4); animation:spin 26s linear infinite reverse;}
+  .approach-visual .core{
+    width:14px;height:14px;border-radius:50%;
+    background:radial-gradient(circle at 35% 35%, #fff, var(--gold-light), var(--gold));
+    box-shadow:0 0 40px 10px rgba(184,147,91,0.5);
+    position:relative; z-index:2;
+  }
+  @keyframes spin{to{transform:rotate(360deg);}}
+  .principle{
+    display:grid; grid-template-columns:60px 1fr; gap:20px;
+    padding:30px 0; border-top:1px solid var(--line);
+  }
+  .principle:last-child{border-bottom:1px solid var(--line);}
+  .principle .pn{font-family:'IBM Plex Mono',monospace; color:var(--gold); font-size:0.85rem; padding-top:4px;}
+  .principle h4{font-size:1.15rem; font-weight:500; margin-bottom:8px;}
+  .principle p{color:var(--slate); font-size:0.93rem; max-width:52ch;}
+
+  /* ---------- PRESENCE / MAP ---------- */
+  .presence{
+    background:var(--ink); color:#fff; position:relative; overflow:hidden;
+  }
+  .presence::before{
+    content:""; position:absolute; inset:0;
+    background:radial-gradient(700px 400px at 85% 20%, rgba(184,147,91,0.14), transparent 65%);
+  }
+  .presence .section-head p{color:rgba(255,255,255,0.6);}
+  .presence .section-head h2{color:#fff;}
+  .city-grid{
+    position:relative; z-index:2;
+    display:grid; grid-template-columns:repeat(4,1fr); gap:30px 20px;
+  }
+  @media (max-width:900px){.city-grid{grid-template-columns:repeat(2,1fr);}}
+  .city{
+    padding:22px 0; border-top:1px solid var(--line-dark);
+    display:flex; justify-content:space-between; align-items:baseline;
+  }
+  .city .name{font-family:'Fraunces',serif; font-size:1.15rem;}
+  .city .code{font-family:'IBM Plex Mono',monospace; font-size:0.72rem; color:var(--gold-light); letter-spacing:0.08em;}
+
+  /* ---------- INSIGHTS ---------- */
+  .insights{background:var(--paper);}
+  .insight-grid{display:grid; grid-template-columns:repeat(3,1fr); gap:30px;}
+  @media (max-width:900px){.insight-grid{grid-template-columns:1fr;}}
+  .insight-card{
+    border:1px solid var(--line); padding:34px 28px; transition:transform .3s, box-shadow .3s;
+    background:var(--paper);
+  }
+  .insight-card:hover{transform:translateY(-6px); box-shadow:0 18px 40px rgba(10,25,48,0.08);}
+  .insight-card .tag{font-family:'IBM Plex Mono',monospace; font-size:0.7rem; letter-spacing:0.08em; color:var(--bronze); text-transform:uppercase;}
+  .insight-card h3{font-size:1.2rem; margin-top:16px; font-weight:500; line-height:1.3;}
+  .insight-card .meta{margin-top:22px; font-size:0.78rem; color:var(--slate-light); font-family:'IBM Plex Mono',monospace;}
+
+  /* ---------- CTA ---------- */
+  .cta-band{
+    background:linear-gradient(120deg,#0A1930,#152B4F);
+    color:#fff; text-align:center; padding:130px 0; position:relative; overflow:hidden;
+  }
+  .cta-band::after{
+    content:""; position:absolute; left:50%; top:50%; width:600px; height:600px;
+    background:radial-gradient(circle, rgba(184,147,91,0.22), transparent 70%);
+    transform:translate(-50%,-50%);
+  }
+  .cta-band h2{position:relative; z-index:2; font-size:clamp(2rem,4vw,3.2rem); font-weight:400; max-width:16ch; margin:0 auto;}
+  .cta-band .btn-primary{position:relative; z-index:2; margin-top:36px; display:inline-block;}
+
+  /* ---------- FOOTER ---------- */
+  footer{background:var(--ink); color:rgba(255,255,255,0.6); padding:70px 0 30px;}
+  .foot-grid{display:grid; grid-template-columns:1.4fr repeat(3,1fr); gap:40px; padding-bottom:50px; border-bottom:1px solid var(--line-dark);}
+  @media (max-width:760px){.foot-grid{grid-template-columns:1fr 1fr;}}
+  .foot-grid h5{font-family:'IBM Plex Mono',monospace; font-size:0.72rem; letter-spacing:0.1em; text-transform:uppercase; color:var(--gold-light); margin-bottom:18px;}
+  .foot-grid ul{list-style:none;}
+  .foot-grid li{margin-bottom:10px; font-size:0.88rem;}
+  .foot-grid li a:hover{color:#fff;}
+  .foot-logo{display:flex; align-items:center; gap:10px; font-family:'Fraunces',serif; font-size:1.4rem; color:#fff; margin-bottom:14px;}
+  .foot-bottom{display:flex; justify-content:space-between; padding-top:26px; font-size:0.78rem; flex-wrap:wrap; gap:10px;}
+
+  ::selection{background:var(--gold); color:#fff;}
+  a:focus-visible, button:focus-visible{outline:2px solid var(--gold-light); outline-offset:3px;}
+
+  .reveal{opacity:0; transform:translateY(24px); transition:opacity .7s ease, transform .7s ease;}
+  .reveal.in{opacity:1; transform:translateY(0);}
+</style>
+</head>
+<body>
+
+<header id="siteHeader">
+  <nav class="wrap">
+    <div class="logo"><span class="mark"></span>Radiance</div>
+    <div class="navlinks">
+      <a href="#sectors">Sectors</a>
+      <a href="#approach">Approach</a>
+      <a href="#presence">Presence</a>
+      <a href="#insights">Insights</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <a href="#contact" class="nav-cta">Investor Login &nbsp;↗</a>
+  </nav>
+</header>
+
+<section class="hero">
+  <div class="beam"></div>
+  <div class="wrap hero-grid">
+    <div>
+      <p class="eyebrow" style="color:var(--gold-light)">Private Markets, Since 2007</p>
+      <h1 style="margin-top:22px;">Capital finds its <em>clearest</em> path with the right light.</h1>
+      <p class="hero-sub">Radiance is a global private markets firm allocating capital across private equity, infrastructure, real estate, and private credit — built on independent research and disciplined access.</p>
+      <div class="hero-cta-row">
+        <a href="#contact" class="btn-primary">Partner With Us</a>
+        <a href="#approach" class="btn-ghost">Our Approach →</a>
+      </div>
+    </div>
+    <div class="hero-figures">
+      <div class="fig"><div class="num">$164B</div><div class="lbl">Assets Advised</div></div>
+      <div class="fig"><div class="num">31</div><div class="lbl">Offices Worldwide</div></div>
+      <div class="fig"><div class="num">4,900+</div><div class="lbl">Funds Evaluated Annually</div></div>
+    </div>
+  </div>
+</section>
+
+<div class="ticker-band">
+  <div class="ticker-track" id="tickerTrack"></div>
+</div>
+
+<section class="sectors" id="sectors">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Where we allocate.</h2>
+      <p>Four private markets disciplines, one integrated research platform.</p>
+    </div>
+  </div>
+  <div class="sector-grid">
+    <div class="sector-card reveal">
+      <span class="si">01 / Private Equity</span>
+      <h3>Buyout &amp; Growth</h3>
+      <p>Primary commitments, secondaries, and co-investments across the middle market.</p>
+      <div class="arrow">→</div>
+    </div>
+    <div class="sector-card reveal">
+      <span class="si">02 / Infrastructure</span>
+      <h3>Real Assets</h3>
+      <p>Long-duration exposure to energy transition, digital, and transport infrastructure.</p>
+      <div class="arrow">→</div>
+    </div>
+    <div class="sector-card reveal">
+      <span class="si">03 / Real Estate</span>
+      <h3>Property &amp; Credit</h3>
+      <p>Value-add and core-plus strategies across logistics, residential, and data centers.</p>
+      <div class="arrow">→</div>
+    </div>
+    <div class="sector-card reveal">
+      <span class="si">04 / Private Credit</span>
+      <h3>Direct Lending</h3>
+      <p>Senior and mezzanine debt financing for sponsor-backed and independent companies.</p>
+      <div class="arrow">→</div>
+    </div>
+  </div>
+</section>
+
+<section class="approach" id="approach">
+  <div class="wrap approach-grid">
+    <div class="approach-visual reveal">
+      <div class="ring r1"></div>
+      <div class="ring r2"></div>
+      <div class="core"></div>
+    </div>
+    <div>
+      <p class="eyebrow">How We Work</p>
+      <h2 style="margin-top:18px; font-size:2.2rem; max-width:14ch;">Three principles behind every allocation.</h2>
+      <div class="principle reveal">
+        <span class="pn">A</span>
+        <div><h4>Independent research</h4><p>Every manager and asset is underwritten by our own diligence team before capital moves — no outsourced conviction.</p></div>
+      </div>
+      <div class="principle reveal">
+        <span class="pn">B</span>
+        <div><h4>Alignment over access</h4><p>We build relationships with managers over decades, not deals, so incentives stay pointed the same direction as our clients.</p></div>
+      </div>
+      <div class="principle reveal">
+        <span class="pn">C</span>
+        <div><h4>Transparency by default</h4><p>Clients see the same portfolio data, risk views, and manager scorecards our own investment committee uses.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="presence" id="presence">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>A desk on every continent that matters to capital.</h2>
+      <p>Local presence, global underwriting standards.</p>
+    </div>
+    <div class="city-grid" id="cityGrid"></div>
+  </div>
+</section>
+
+<section class="insights" id="insights">
+  <div class="wrap">
+    <div class="section-head reveal">
+      <h2>Perspectives from the desk.</h2>
+      <p>Research and commentary from our investment teams.</p>
+    </div>
+    <div class="insight-grid" id="insightGrid"></div>
+  </div>
+</section>
+
+<section class="cta-band" id="contact">
+  <div class="wrap">
+    <h2 class="reveal">Let's discuss where your capital finds its clearest path.</h2>
+    <a href="mailto:partners@radiance.com" class="btn-primary">Start a Conversation</a>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div>
+        <div class="foot-logo"><span class="mark"></span>Radiance</div>
+        <p style="max-width:32ch; font-size:0.88rem;">A global private markets investment firm allocating across private equity, infrastructure, real estate, and private credit.</p>
+      </div>
+      <div>
+        <h5>Firm</h5>
+        <ul>
+          <li><a href="#approach">Approach</a></li>
+          <li><a href="#sectors">Sectors</a></li>
+          <li><a href="#presence">Offices</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Resources</h5>
+        <ul>
+          <li><a href="#insights">Insights</a></li>
+          <li><a href="#contact">Investor Login</a></li>
+          <li><a href="#contact">Careers</a></li>
+        </ul>
+      </div>
+      <div>
+        <h5>Contact</h5>
+        <ul>
+          <li><a href="mailto:partners@radiance-example.com">partners@radiance-example.com</a></li>
+          <li>New York · London · Singapore</li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© <span id="year"></span> Radiance Group. All rights reserved.</span>
+      <span>This page is a fictional design demo — not a real investment firm.</span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // Header background on scroll
+  const header = document.getElementById('siteHeader');
+  window.addEventListener('scroll', () => {
+    header.classList.toggle('scrolled', window.scrollY > 40);
+  });
+
+  // Reveal-on-scroll
+  const revealEls = document.querySelectorAll('.reveal');
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach(e => { if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+  }, {threshold:0.15});
+  revealEls.forEach(el => io.observe(el));
+
+  // Ticker content
+  const tickerItems = [
+    'Private Equity', 'Infrastructure', 'Real Estate', 'Private Credit',
+    'Secondaries', 'Co-Investment', 'Energy Transition', 'Direct Lending'
+  ];
+  const track = document.getElementById('tickerTrack');
+  const doubled = [...tickerItems, ...tickerItems, ...tickerItems, ...tickerItems];
+  track.innerHTML = doubled.map(t => `<span><b>◆</b> ${t}</span>`).join('');
+
+  // Cities
+  const cities = [
+    ['New York','NYC'], ['London','LDN'], ['Singapore','SIN'], ['Tokyo','TYO'],
+    ['San Francisco','SFO'], ['Frankfurt','FRA'], ['Hong Kong','HKG'], ['Sydney','SYD']
+  ];
+  document.getElementById('cityGrid').innerHTML = cities.map(([name,code]) =>
+    `<div class="city"><span class="name">${name}</span><span class="code">${code}</span></div>`
+  ).join('');
+
+  // Insights
+  const insights = [
+    ['Perspective', 'The case for private infrastructure in a higher-rate world', 'June 2026 · 6 min read'],
+    ['Market Note', 'Secondaries pricing normalizes as sponsors return to market', 'May 2026 · 4 min read'],
+    ['Research', 'Direct lending spreads and what they signal for 2027', 'April 2026 · 7 min read']
+  ];
+  document.getElementById('insightGrid').innerHTML = insights.map(([tag,title,meta]) => `
+    <div class="insight-card reveal">
+      <span class="tag">${tag}</span>
+      <h3>${title}</h3>
+      <div class="meta">${meta}</div>
+    </div>`).join('');
+  // Re-observe newly injected reveal cards
+  document.querySelectorAll('.insight-card.reveal').forEach(el => io.observe(el));
+
+  document.getElementById('year').textContent = new Date().getFullYear();
+
+  // Mobile nav toggle placeholder (graceful no-op if not present)
+</script>
+</body>
+</html>
